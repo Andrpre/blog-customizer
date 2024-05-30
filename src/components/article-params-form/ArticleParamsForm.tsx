@@ -14,15 +14,27 @@ import {
 	backgroundColors,
 	contentWidthArr,
 } from 'src/constants/articleProps';
+import { useOutsideClickClose } from '../select/hooks/useOutsideClickClose';
 
 import styles from './ArticleParamsForm.module.scss';
-import { useState } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import clsx from 'clsx';
 
-export const ArticleParamsForm = () => {
-	const [isMenuOpen, setIsMenuOpen] = useState(false);
+type ArticleParamsFormProps = {
+	setStatePage: React.Dispatch<React.SetStateAction<ArticleStateType>>;
+};
+
+export const ArticleParamsForm = ({ setStatePage }: ArticleParamsFormProps) => {
+	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 	const [stateForm, setStateForm] =
 		useState<ArticleStateType>(defaultArticleState);
+	const rootRef = useRef<HTMLDivElement>(null);
+
+	useOutsideClickClose({
+		isOpen: isMenuOpen,
+		rootRef,
+		onChange: setIsMenuOpen,
+	});
 
 	const toggleForm = () => {
 		isMenuOpen ? setIsMenuOpen(false) : setIsMenuOpen(true);
@@ -33,14 +45,28 @@ export const ArticleParamsForm = () => {
 			...prev,
 			[type]: value,
 		}));
-		console.log(stateForm);
+	};
+
+	const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+		evt.preventDefault();
+		setStatePage(stateForm);
+	};
+
+	const handleReset = (evt: FormEvent<HTMLFormElement>) => {
+		evt.preventDefault();
+		setStatePage(defaultArticleState);
+		setStateForm(defaultArticleState);
 	};
 
 	return (
-		<>
+		<div ref={rootRef}>
 			<ArrowButton onClick={toggleForm} isMenuOpen={isMenuOpen} />
-			<aside className={clsx(styles.container, true && styles.container_open)}>
-				<form className={styles.form}>
+			<aside
+				className={clsx(styles.container, isMenuOpen && styles.container_open)}>
+				<form
+					className={styles.form}
+					onSubmit={handleSubmit}
+					onReset={handleReset}>
 					<Text as='h2' size={31} weight={800} uppercase={true}>
 						Задайте параметры
 					</Text>
@@ -84,6 +110,6 @@ export const ArticleParamsForm = () => {
 					</div>
 				</form>
 			</aside>
-		</>
+		</div>
 	);
 };
