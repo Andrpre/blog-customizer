@@ -38,5 +38,11 @@ module.exports = {
 		'@typescript-eslint/explicit-module-boundary-types': 'off',
 		'react-hooks/exhaustive-deps': 'off',
 		'import/no-named-as-default': 'off',
+		'prettier/prettier': [
+			'error',
+			{
+			  'endOfLine': 'auto'
+			}
+		  ]
 	},
 };

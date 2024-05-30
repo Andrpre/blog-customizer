@@ -176,4 +176,12 @@ export const defaultArticleState = {
 	fontSizeOption: fontSizeOptions[0],
 };
 
+export const currentArticleState = {
+	fontFamilyOption: fontFamilyOptions[0],
+	fontColor: fontColors[0],
+	backgroundColor: backgroundColors[0],
+	contentWidth: contentWidthArr[0],
+	fontSizeOption: fontSizeOptions[0],
+};
+
 export type ArticleStateType = typeof defaultArticleState;
