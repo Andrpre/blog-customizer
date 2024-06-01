@@ -21,24 +21,20 @@ import { FormEvent, useRef, useState } from 'react';
 import clsx from 'clsx';
 
 type ArticleParamsFormProps = {
-	setStatePage: React.Dispatch<React.SetStateAction<ArticleStateType>>;
+    setStatePage: (newStatePage: ArticleStateType) => void;
 };
 
 export const ArticleParamsForm = ({ setStatePage }: ArticleParamsFormProps) => {
 	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 	const [stateForm, setStateForm] =
 		useState<ArticleStateType>(defaultArticleState);
-	const rootRef = useRef<HTMLDivElement>(null);
+	const rootRef = useRef<HTMLDivElement | null>(null);
 
 	useOutsideClickClose({
 		isOpen: isMenuOpen,
 		rootRef,
 		onChange: setIsMenuOpen,
 	});
-
-	const toggleForm = () => {
-		isMenuOpen ? setIsMenuOpen(false) : setIsMenuOpen(true);
-	};
 
 	const handleChange = (type: keyof ArticleStateType, value: OptionType) => {
 		setStateForm((prev) => ({
@@ -60,7 +56,7 @@ export const ArticleParamsForm = ({ setStatePage }: ArticleParamsFormProps) => {
 
 	return (
 		<div ref={rootRef}>
-			<ArrowButton onClick={toggleForm} isMenuOpen={isMenuOpen} />
+			<ArrowButton onClick={() => setIsMenuOpen(!isMenuOpen)} isMenuOpen={isMenuOpen} />
 			<aside
 				className={clsx(styles.container, isMenuOpen && styles.container_open)}>
 				<form
@@ -70,40 +66,33 @@ export const ArticleParamsForm = ({ setStatePage }: ArticleParamsFormProps) => {
 					<Text as='h2' size={31} weight={800} uppercase={true}>
 						Задайте параметры
 					</Text>
-					<Separator type='spacing' />
 					<Select
 						selected={stateForm.fontFamilyOption}
 						options={fontFamilyOptions}
 						onChange={(option) => handleChange('fontFamilyOption', option)}
 						title='Шрифт'></Select>
-					<Separator type='spacing' />
 					<RadioGroup
 						name='size_button'
 						selected={stateForm.fontSizeOption}
 						options={fontSizeOptions}
 						onChange={(option) => handleChange('fontSizeOption', option)}
 						title='Размер шрифта'></RadioGroup>
-					<Separator type='spacing' />
 					<Select
 						selected={stateForm.fontColor}
 						options={fontColors}
 						onChange={(option) => handleChange('fontColor', option)}
 						title='Цвет шрифта'></Select>
-					<Separator type='spacing' />
 					<Separator type='separator' />
-					<Separator type='spacing' />
 					<Select
 						selected={stateForm.backgroundColor}
 						options={backgroundColors}
 						onChange={(option) => handleChange('backgroundColor', option)}
 						title='Цвет фона'></Select>
-					<Separator type='spacing' />
 					<Select
 						selected={stateForm.contentWidth}
 						options={contentWidthArr}
 						onChange={(option) => handleChange('contentWidth', option)}
 						title='Ширина контента'></Select>
-					<Separator type='spacing' />
 					<div className={styles.bottomContainer}>
 						<Button title='Сбросить' type='reset' />
 						<Button title='Применить' type='submit' />

@@ -11,6 +11,6 @@ type Story = StoryObj<typeof Separator>;
 
 export const SelectStory: Story = {
 	render: () => {
-		return <Separator type='spacing' />;
+		return <Separator type='separator' />;
 	},
 };
