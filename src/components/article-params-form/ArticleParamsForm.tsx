@@ -21,7 +21,7 @@ import { FormEvent, useRef, useState } from 'react';
 import clsx from 'clsx';
 
 type ArticleParamsFormProps = {
-    setStatePage: (newStatePage: ArticleStateType) => void;
+	setStatePage: (newStatePage: ArticleStateType) => void;
 };
 
 export const ArticleParamsForm = ({ setStatePage }: ArticleParamsFormProps) => {
@@ -56,7 +56,10 @@ export const ArticleParamsForm = ({ setStatePage }: ArticleParamsFormProps) => {
 
 	return (
 		<div ref={rootRef}>
-			<ArrowButton onClick={() => setIsMenuOpen(!isMenuOpen)} isMenuOpen={isMenuOpen} />
+			<ArrowButton
+				onClick={() => setIsMenuOpen(!isMenuOpen)}
+				isMenuOpen={isMenuOpen}
+			/>
 			<aside
 				className={clsx(styles.container, isMenuOpen && styles.container_open)}>
 				<form
