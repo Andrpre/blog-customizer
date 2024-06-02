@@ -1,5 +1,10 @@
 import styles from './index.module.scss';
 
-export const Separator = () => {
-	return <div className={styles.separator}></div>;
+type SeparatorProps = {
+	/** Тип блока */
+	type: 'separator';
+};
+
+export const Separator = ({ type = 'separator' }: SeparatorProps) => {
+	return <div className={styles[`${type}`]}></div>;
 };

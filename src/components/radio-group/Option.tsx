@@ -17,7 +17,7 @@ type OptionProps = {
 export const Option = (props: OptionProps) => {
 	const { value, title, selected, groupName, onChange, option } = props;
 
-	const optionRef = useRef<HTMLDivElement>(null);
+	const optionRef = useRef<HTMLDivElement | null>(null);
 
 	const handleChange = () => onChange?.(option);
 
